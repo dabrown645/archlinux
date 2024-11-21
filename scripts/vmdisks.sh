@@ -49,6 +49,6 @@ mount --mkdir --options subvol=/@log,defaults,noatime,compress=zstd ${rootcrypt}
 mount --mkdir --options subvol=/@tmp,defaults,noatime,compress=zstd ${rootcrypt} /mnt/var/tmp
 mount --mkdir --options subvol=/@images,defaults,noatime,compress=zstd ${rootcrypt} /mnt/var/lib/libvirt/images
 
-mount --mkdir --options defaults,umask=0077 /dev/disk/by-partlabel/EFI /mnt/efi
+mount --mkdir --options defaults,umask=0077 /dev/disk/by-partlabel/EFI /mnt/boot/efi
 
 
