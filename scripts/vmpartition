@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+if [[ ${#} -ne 1 ]]; then
+  printf "You must enter disk you want to partition\n"
+  lsblk
+  exit 1
+fi
+
+disk=${1}
+
+[[ "X$(lsblk -ndo PTTYPE ${disk})" == "X" ]] && partitioned=false || partitioned=true
+
+if ${partitioned} ; then
+  printf "It appears that ${disk} is already partitioned\n"
+  lsblk -o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS ${disk}
+  read -p "Do you really want to re-partion and loose all data on ${disk} [YES/NO]?" ans
+  if [[ ! ${ans^^} == "YES" ]]; then
+    printf "Exiting with OUT re-partitioning ${disk}"
+    exit 1
+  fi
+fi
+
+# Partition the disk drive
+
+sgdisk -Z ${disk}
+
+sgdisk --new=0:0:+1G --change-name=0:EFI --typecode=0:ef00 ${disk}          # setup efi partition
+sgdisk --new=0:0:+10G --change-name=0:swap --typecode=0:8200 ${disk}        # setup swap partion
+sgdisk --largest-new=0 --change-name=0:archlinux --typecode=0:8303 ${disk}  # setup root partition
+
+printf "${disk} has been partitioned\n"
+lsblk -o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS ${disk}
