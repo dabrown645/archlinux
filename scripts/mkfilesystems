@@ -8,6 +8,9 @@ fi
 
 disk=${1}
 
+lsblk -o NAME,FSTYPE,PARTLABEL
+echo ""
+
 while read -u 7 name partlabel rest; do
   case ${partlabel} in
     EFI|EPS)
@@ -46,7 +49,7 @@ while read -u 7 name partlabel rest; do
       ;;
   esac
  done 7<<<$(lsblk -o NAME,PARTLABEL ${disk} \
-   | grep -E "${disk##*/}[0-9]" \
+   | grep -E "${disk##*/}[0-9]|${disk##*/}p[0-9]" \
    | sed -e s'/..//'
  )
 
