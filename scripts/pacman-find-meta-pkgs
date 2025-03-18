@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#set -x
+#base=(base firedragon-bin)
+#for pkg in ${base[@]}; do
+
+for pkg in $(pacman -Ssq); do
+  pacman -Si ${pkg} \
+    | sed -e 's/  */ /g' -e 's/Installed /Installed_/' \
+    | while read field col value ; do
+        #echo "field=${field}  value=${value}"
+        if [[ ${field} == "Repository" ]]; then
+          printf "${pkg}:${value}:"
+        fi
+        if [[ ${field} == "Installed_Size" ]]; then
+          printf "${value}\n"
+        fi
+      done
+done

@@ -1,71 +1,128 @@
 #!/usr/bin/env bash
 
-if [[ ${#} -ne 1 ]]; then
-  printf "You must enter disk with the partitions you want to initialize\n"
-  lsblk
-  exit 1
-fi
+main() {
+  source ./utils.sh
+  trap "cleanup" EXIT
 
-disk=${1}
+  PARAMS=()
 
-lsblk -o NAME,FSTYPE,PARTLABEL
-echo ""
+  # Defaults
+  cmd=""
+  dryrun=true
+  lsblkopt="-o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS"
 
-while read -u 7 name partlabel rest; do
-  case ${partlabel} in
-    EFI|EPS)
-      read -u 2 -p "Do you want to reformat /dev/${name} [YES/NO]-> " ans
-      if [[ ${ans^^} == "YES" ]]; then
-        mkfs.vfat -F32 -n EFI /dev/disk/by-partlabel/EFI
+  while (("${#}")); do
+    case "${1}" in
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    -d | --dryrun) dryrun=true ;;
+    --* | -*) # unsupported flags
+      echo "Error: Unsupported flag ${1}" >&2
+      usage
+      exit 1
+      ;;
+    *) PARAMS+=("${1}") ;; # preserve positioal arguments
+    esac
+    shift
+  done
+
+  # set positioanl arguments in their proper place
+  set -- "${PARAMS[@]}"
+
+  if ${dryrun}; then
+    cmd="echo"
+  fi
+
+  if [[ ${#} -ne 1 ]]; then
+    printf "You must enter disk with the partitions you want to initialize\n"
+    lsblk
+    usage
+    exit 1
+  fi
+
+  disk=${1}
+
+  ${cmd} lsblk ${lsblkopt} ${disk}
+  echo ""
+
+  while read -ru 7 name partlabel rest; do
+    case ${partlabel} in
+    EFI | EPS)
+      read -ru 2 -p "Do you want to reformat ${partlabel} /dev/${name} [YES/NO]-> " ans
+      if [[ "${ans}" == "YES" ]]; then
+        ${cmd} mkfs.vfat -F32 -n EFI /dev/disk/by-partlabel/EFI
+        box_me "${partlabel} has been reformated"
+      else
+        box_me "${partlabel} has NOT been formated"
       fi
       ;;
-    SWAP|swap)
-      swapoff --all
-      mkswap /dev/disk/by-partlabel/swap
-      swapon
+    SWAP | swap)
+      ${cmd} swapoff --all
+      ${cmd} mkswap /dev/disk/by-partlabel/swap
+      ${cmd} swapon
       ;;
     archlinux)
-      read -u 2 -p "Do you want to reformat /dev/${name} [YES/NO]-> " ans
-      if [[ ${ans^^} == "YES" ]]; then
+      read -ru 2 -p "Do you want to reformat ${partlabel} /dev/${name} [YES/NO]-> " ans
+      if [[ "${ans}" == "YES" ]]; then
         #TODO: add encryption of root volume
         rootdisk=/dev/disk/by-partlabel/archlinux
 
-         mkfs.btrfs -f -L archlinux ${rootdisk}
-         mount --mkdir ${rootdisk} /mnt/archinstall
+        ${cmd} mkfs.btrfs -f -L archlinux ${rootdisk}
+        ${cmd} mount --mkdir ${rootdisk} /mnt/archinstall
 
-         btrfs subvolume create /mnt/archinstall/@
-         btrfs subvolume create /mnt/archinstall/@home
-         btrfs subvolume create /mnt/archinstall/@root
-         btrfs subvolume create /mnt/archinstall/@srv
-         btrfs subvolume create /mnt/archinstall/@cache
-         btrfs subvolume create /mnt/archinstall/@log
-         btrfs subvolume create /mnt/archinstall/@tmp
-         btrfs subvolume create /mnt/archinstall/@images
-         btrfs subvolume create /mnt/archinstall/@.snapshots
+        ${cmd} btrfs subvolume create /mnt/archinstall/@
+        ${cmd} btrfs subvolume create /mnt/archinstall/@home
+        ${cmd} btrfs subvolume create /mnt/archinstall/@root
+        ${cmd} btrfs subvolume create /mnt/archinstall/@srv
+        ${cmd} btrfs subvolume create /mnt/archinstall/@cache
+        ${cmd} btrfs subvolume create /mnt/archinstall/@log
+        ${cmd} btrfs subvolume create /mnt/archinstall/@tmp
+        ${cmd} btrfs subvolume create /mnt/archinstall/@images
+        ${cmd} btrfs subvolume create /mnt/archinstall/@.snapshots
+        box_me "${partlabel} has been reformated"
+      else
+        box_me "${partlabel} has NOT been formated"
       fi
       ;;
     *)
-      printf "${partlabel} not used during installation\n"
+      printf "%s not used during installation\n" ${partlabel}
       ;;
-  esac
- done 7<<<$(lsblk -o NAME,PARTLABEL ${disk} \
-   | grep -E "${disk##*/}[0-9]|${disk##*/}p[0-9]" \
-   | sed -e s'/..//'
- )
+    esac
+  done 7<<<$(
+    lsblk -o NAME,PARTLABEL ${disk} |
+      grep -E "${disk##*/}[0-9]|${disk##*/}p[0-9]" |
+      sed -e s'/..//'
+  )
 
+  ${cmd} umount -R /mnt/archinstall
 
-umount -R /mnt/archinstall
+  ${cmd} mount --mkdir --options subvol=/@,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall
+  ${cmd} mount --mkdir --options subvol=/@home,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/home
+  ${cmd} mount --mkdir --options subvol=/@.snapshots,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/.snapshots
+  ${cmd} mount --mkdir --options subvol=/@root,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/root
+  ${cmd} mount --mkdir --options subvol=/@srv,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/srv
+  ${cmd} mount --mkdir --options subvol=/@cache,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/cache
+  ${cmd} mount --mkdir --options subvol=/@log,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/log
+  ${cmd} mount --mkdir --options subvol=/@tmp,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/tmp
+  ${cmd} mount --mkdir --options subvol=/@images,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/lib/libvirt/images
+  ${cmd} mount --mkdir --options defaults /dev/disk/by-partlabel/EFI /mnt/archinstall/boot/efi
 
-mount --mkdir --options subvol=/@,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall
-mount --mkdir --options subvol=/@home,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/home
-mount --mkdir --options subvol=/@.snapshots,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/.snapshots
-mount --mkdir --options subvol=/@root,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/root
-mount --mkdir --options subvol=/@srv,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/srv
-mount --mkdir --options subvol=/@cache,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/cache
-mount --mkdir --options subvol=/@log,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/log
-mount --mkdir --options subvol=/@tmp,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/tmp
-mount --mkdir --options subvol=/@images,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/lib/libvirt/images
+}
 
-mount --mkdir --options defaults /dev/disk/by-partlabel/EFI /mnt/archinstall/boot/efi
+cleanup() {
+  :
+}
 
+usage() {
+  printf "${0} [-h|--help] [-d|--dryrun] device\n"
+  printf "\nThis script will ask if you want to format the partitions used by archlinux\n"
+  printf "\n\t-d|--dryrun        Will tell you commands that will be run without running\n"
+  printf "\t-h|--help          This help information\n"
+  printf "\tdevice             This is the device with partitions to be formated\n"
+}
 
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "${@}"
+fi

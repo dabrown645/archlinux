@@ -1,32 +1,85 @@
 #!/usr/bin/env bash
 
-if [[ ${#} -ne 1 ]]; then
-  printf "You must enter disk you want to partition\n"
-  lsblk
-  exit 1
-fi
+main() {
+  trap "cleanup" EXIT
 
-disk=${1}
+  PARAMS=()
 
-[[ "X$(lsblk -ndo PTTYPE ${disk})" == "X" ]] && partitioned=false || partitioned=true
+  # Defaults
+  cmd=""
+  dryrun=false
+  lsblkopt="-o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS"
 
-if ${partitioned} ; then
-  printf "It appears that ${disk} is already partitioned\n"
-  lsblk -o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS ${disk}
-  read -p "Do you really want to re-partion and loose all data on ${disk} [YES/NO]?" ans
-  if [[ ! ${ans^^} == "YES" ]]; then
-    printf "Exiting with OUT re-partitioning ${disk}"
-    exit 1
+  while (("${#}")); do
+    case "${1}" in
+    -h | --help) usage ;;
+    -d | --dryrun)
+      dryrun=true
+      shift 1
+      ;;
+    --* | -*) # unsupported flags
+      echo "Error: Unsupported flag ${1}" >&2
+      exit 1
+      ;;
+    *) # preserve positioal arguments
+      PARAMS+="${1}"
+      shift
+      ;;
+    esac
+  done
+
+  # set positioanl arguments in their proper place
+  set -- "${PARAMS[@]}"
+  #
+  # [[ ${dryrun} ]] && cmd=echo || cmd=""
+  if ${dryrun}; then
+    cmd=echo
   fi
+
+  if [[ ${#} -ne 1 ]]; then
+    printf "You must enter the disk you want to partition\n"
+    ${cmd} lsblk ${lsblkopt} ${disk}
+    usage
+  fi
+
+  disk=${1}
+
+  [[ "X$(lsblk -ndo PTTYPE ${disk})" == "X" ]] && partitioned=false || partitioned=true
+
+  ${cmd} lsblk ${lsblkopt} ${disk}
+
+  if ${partitioned}; then
+    printf "It appears that %s is already partitioned\n" "${disk}"
+    ${cmd} lsblk ${lsblkopt} ${disk}
+    read -p "Do you really want to re-partion and loose all data on ${disk} [YES/NO]?" ans
+    if [[ ! ${ans} == "YES" ]]; then
+      printf "Exiting with OUT re-partitioning %s\n" "${disk}"
+      exit 1
+    fi
+  fi
+
+  # Partition the disk drive
+
+  ${cmd} sgdisk -Z "${disk}"
+
+  ${cmd} sgdisk --new=0:0:+1G --change-name=0:EFI --typecode=0:ef00 "${disk}"         # setup efi partition
+  ${cmd} sgdisk --new=0:0:+10G --change-name=0:swap --typecode=0:8200 "${disk}"       # setup swap partion
+  ${cmd} sgdisk --largest-new=0 --change-name=0:archlinux --typecode=0:8303 "${disk}" # setup root partition
+
+  printf "%s has been partitioned\n" "${disk}"
+  ${cmd} lsblk ${lsblkopt} ${disk}
+
+}
+
+cleanup() {
+  :
+}
+
+usage() {
+  printf "This is the usage stagement\n"
+  exit 1
+}
+
+if [[ "${BASH_SOURCE[0]}" == ${0} ]]; then
+  main ${@}
 fi
-
-# Partition the disk drive
-
-sgdisk -Z ${disk}
-
-sgdisk --new=0:0:+1G --change-name=0:EFI --typecode=0:ef00 ${disk}          # setup efi partition
-sgdisk --new=0:0:+10G --change-name=0:swap --typecode=0:8200 ${disk}        # setup swap partion
-sgdisk --largest-new=0 --change-name=0:archlinux --typecode=0:8303 ${disk}  # setup root partition
-
-printf "${disk} has been partitioned\n"
-lsblk -o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS ${disk}

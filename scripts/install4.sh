@@ -1,0 +1,75 @@
+#!/usr/bin/bash
+
+if [[ ${dryrun} == true ]]; then
+  cmd="echo "
+else
+  cmd=""
+fi
+
+source utils.sh
+
+# mountpoint=$(jq -r .disk_config.mountpoint user_configuration.json)
+mountpoint=$(grep mountpoint user_configuration.json | cut -f 4 -d '"')
+echo "mountpoint=${mountpoint}"
+
+box_me "Allow pacman to do parallel downloads during install"
+${cmd} fix_pacmanconf
+
+box_me "Run archinstall to install my basic configuration"
+${cmd} archinstall --config user_configuration.json \
+  --creds user_credentials.json \
+  --silent
+box_me "error code form archinstall ${?}"
+[[ {?} == 0 ]] || exit 1
+
+box_me "Allow pacman to do parallel downloads on new system"
+# fix pacman.conf for parallel downloads
+${cmd} fix_pacmanconf ${mountpoint}/etc/pacman.conf
+
+box_me "Add the chaotic-aur repository"
+# box_me "Before $(tail ${mountpoint}/etc/pacman.conf)"
+# Add chaotic-aur repo to pacman.conf
+${cmd} arch-chroot ${mountpoint} pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+${cmd} arch-chroot ${mountpoint} pacman-key --lsign-key 3056513887B78AEB
+${cmd} arch-chroot ${mountpoint} pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+${cmd} echo [chaotic-aur] >>${mountpoint}/etc/pacman.conf
+${cmd} echo Include = /etc/pacman.d/chaotic-mirrorlist >>${mountpoint}/etc/pacman.conf
+# box_me "After $(tail ${mountpoint}/etc/pacman.conf)"
+
+packages=""
+case $(grep vendor_id /proc/cpuinfo | head -1 | sed -e 's/[[:space:]]//g' | cut -f 2 -d ":") in
+GenuineIntel) packages="${packages} intel-ucode" ;;
+AuthenticAMD) packages="${packages} amd-ucode" ;;
+*)
+  printf "Unsupported archicture"
+  exit 1
+  ;;
+esac
+
+${cmd} arch-chroot ${mountpoint} systemctl enable cronie --now
+
+box_me "Update Arch before we install the rest of the packages"
+${cmd} arch-chroot ${mountpoint} pacman -Syu --needed --noconfirm
+
+box_me "Install myfonts"
+packages="${packages} $(./info.py myfonts)"
+${cmd} arch-chroot ${mountpoint} pacman -S --needed --noconfirm ${packages}
+
+# box_me "Install arch specific micro-code and snapper packages"
+# packages="${packages} $(./info.py snapper)"
+# ${cmd} arch-chroot ${mountpoint} pacman -S --needed --noconfirm ${packages}
+# echo arch-chroot ${mountpoint} umount /.snapshots
+# ${cmd} arch-chroot ${mountpoint} umount /.snapshots
+# echo arch-chroot ${mountpoint} rmdir /.snapshots
+# ${cmd} arch-chroot ${mountpoint} rmdir /.snapshots
+# echo arch-chroot ${mountpoint} snapper -c root create-config /
+# ${cmd} arch-chroot ${mountpoint} snapper -c root create-config /
+# echo arch-chroot ${mountpoint} btrfs subvol delete .snapshots
+# ${cmd} arch-chroot ${mountpoint} btrfs subvol delete .snapshots
+# echo arch-chroot ${mountpoint} mkdir /.snapshots
+# ${cmd} arch-chroot ${mountpoint} mkdir /.snapshots
+# edho arch-chroot ${mountpoint} mount -a
+# ${cmd} arch-chroot ${mountpoint} mount -a
+# ${cmd} arch-chroot ${mountpoint} systemctl enable --now grub-btrfsd
+# ${cmd} arch-chroot ${mountpoint} ln -sf /boot/efi/grub /boot/grub
+# ${cmd} arch-chroot ${mountpoint} grub-mkconfig -o /boot/grub/grub.cfg
