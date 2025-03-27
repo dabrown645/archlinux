@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+if [[ ${dryrun} == true ]]; then
+  cmd="echo "
+else
+  cmd=""
+fi
+
+source utils.sh
+
+if [[ $(uname -n) == "archiso" ]]; then
+  mountpoint=$(grep mountpoint user_configuration.json | cut -f 4 -d '"')
+  echo "mountpoint=${mountpoint}"
+  CMD="${cmd} arch-chroot ${mountpoint} "
+else
+  mountpoint=""
+  CMD=${cmd}
+fi
+
+box_me "Install arch specific jakoolit packages"
+packages="${packages} $(./info.py jakoolit)"
+${CMD} pacman -S --needed --noconfirm ${packages}
+
+${CMD} systemctl enable --now sddm

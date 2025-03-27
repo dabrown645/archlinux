@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+
+main() {
+  source ./utils.sh
+  trap "cleanup" EXIT
+
+  PARAMS=()
+
+  # Defaults
+  export cmd=""
+  export CMD=""
+  export dryrun=false
+  export mountpoint="/mnt/archinstall"
+
+  while (("${#}")); do
+    case "${1}" in
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    -d | --dryrun)
+      dryrun=true
+      shift 1
+      ;;
+    -m | --mountpoint)
+      mountpoint=${2}
+      shift 1
+      ;;
+    --* | -*) # unsupported flags
+      echo "Error: Unsupported flag ${1}" >&2
+      exit 1
+      ;;
+    *) # preserve positioal arguments
+      PARAMS+=("${1}")
+      shift
+      ;;
+    esac
+  done
+
+  # set positioanl arguments in their proper place
+  set -- "${PARAMS[@]}"
+
+  if ${dryrun}; then
+    cmd="echo"
+  else
+    cmd=""
+  fi
+
+  if [[ $(uname -n) == "archiso" ]]; then
+    mountpoint=$(grep mountpoint user_configuration.json | cut -f 4 -d '"')
+    echo "mountpoint=${mountpoint}"
+    CMD="${cmd} arch-chroot ${mountpoint} "
+  else
+    mountpoint=""
+    CMD=${cmd}
+  fi
+
+  if [[ ${#} -ne 1 ]]; then
+    printf "You must enter the disk you want to partition\n"
+    ${cmd} lsblk "${disk}"
+    usage
+    exit
+  fi
+
+  setfont -d
+  timedatectl
+  ${cmd} mkdir -p "${mountpoint}"
+
+  disk=${1}
+
+  ${cmd} fix_pacmanconf
+
+  ./vmpartition "${disk}"
+
+  ./mkfilesystems "${disk}"
+
+  packages=(git intel-ucode)
+  packages+=("$(./info.py minimal)")
+  packages+=("$(./info.py network)")
+  packages+=("$(./info.py myfonts)")
+  packages+=("$(./info.py editors)")
+  packages+=("$(./info.py filesystems)")
+  packages+=("$(./info.py nvidia_open_prop_graphic)")
+  packages+=("$(./info.py pipewire)")
+  packages+=("$(./info.py archivers)")
+
+  # shellcheck disable=SC2068
+  ${cmd} pacstrap -K "${mountpoint}" ${packages[@]}
+
+  ${cmd} fix_pacmanconf "${mountpoint}/etc/pacman.conf"
+
+  ${cmd} genfstab -L "${mountpoint}" >>"${mountpoint}/etc/fstab"
+
+  ${CMD} hwclock --systohc
+
+  ${cmd} fix_locale_gen "${mountpoint}/etc/locale.gen"
+  ${CMD} locale-gen
+
+  # ${cmd} fix_localtime "${mountpoint}/etc/localtime"
+  ${cmd} fix_locale_conf "${mountpoint}/etc/locale.conf"
+  ${cmd} fix_vconsole_conf "${mountpoint}/etc/vscondole.conf"
+  ${cmd} fix_hostname "${mountpoint}/etc/hostname"
+
+  ${CMD} mkinitcpio -P
+
+  #Need grub installation
+  ${CMD} grub-install \
+    --target=x86_64-efi \
+    --efi-directory=/boot/efi \
+    --boot-directory=/boot \
+    --bootloader-id=Arch \
+    --removable
+
+  ${CMD} grub-mkconfig -o /boot/grub/grub.cfg
+
+  ${CMD} systemctl enable --now NetworkManager
+  ${CMD} timedatectl set-timezone America/Los_Angeles
+  ${CMD} timedatectl set-ntp true
+
+  box_me "Provide root's password"
+  ${CMD} passwd
+
+  ${CMD} useradd --create-home --groups wheel dabrown
+  ${cmd} fix_sudoers_wheel "${mountpoint}/etc/sudoers"
+  box_me "Provide dabrown's password"
+  ${CMD} passwd dabrown
+
+  ./chaotic-aur
+
+  ./plasma_install
+
+  ./hyprland_install
+
+  # ./snapper_install
+
+}
+
+cleanup() {
+  :
+}
+
+usage() {
+  printf "%s [-h|--help] [-d|--dryrun] [-m|--mountpoint] device\n" "${0}"
+  printf "\nThis script will manage the installation of archlinux\n"
+  printf "\n\t-d|--dryrun              Will tell you what commands would have been executed\n"
+  printf "\t-m|--mountpoint          This is the mountpoint used for the installation target\n"
+  printf "\t-h|--help                This help information\n"
+  printf "\tdevice                   This is the disk device where archlinux is to be installed\n"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "${@}"
+fi

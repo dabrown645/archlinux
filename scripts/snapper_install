@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+
+if [[ ${dryrun} == true ]]; then
+  cmd="echo "
+else
+  cmd=""
+fi
+
+source utils.sh
+
+if [[ $(uname -n) == "archiso" ]]; then
+  mountpoint=$(grep mountpoint user_configuration.json | cut -f 4 -d '"')
+  echo "mountpoint=${mountpoint}"
+  CMD="${cmd} arch-chroot ${mountpoint} "
+else
+  mountpoint=""
+  CMD=${cmd}
+fi
+
+box_me "Install arch specific micro-code and snapper packages"
+packages="${packages} $(./info.py snapper)"
+${CMD} pacman -S --needed --noconfirm ${packages}
+# ${cmd} fix_grub-btrfs ${mountpoint}/etc/default/grub-btrfs/config
+# set -x
+${CMD} umount /.snapshots
+${CMD} rmdir /.snapshots
+# ${CMD} ls -la /
+# sleep 5
+${CMD} snapper -c root create-config /
+${CMD} btrfs subvol delete /.snapshots
+${CMD} mkdir /.snapshots
+${CMD} mount -a
+${CMD} systemctl daemon-reload
+${CMD} systemctl enable --now grub-btrfsd
+# ${CMD} ln -sf /boot/efi/grub /boot/grub
+${CMD} grub-mkconfig -o /boot/grub/grub.cfg
+${CMD} grub-mkconfig -o /boot/grub/grub.cfg
+# set +x

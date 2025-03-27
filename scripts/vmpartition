@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 
 main() {
-  trap "cleanup" EXIT
+  source ./utils.sh
+  box_me "Starting ${disk} partitioning"
 
-  PARAMS=()
+  trap "cleanup" EXIT
+  printf "dryrun = %s\n" "${dryrun}"
+  printf "cmd = %s\n" ${cmd}
 
   # Defaults
-  cmd=""
-  dryrun=false
+  # cmd=""
   lsblkopt="-o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS"
+  # dryrun=false
+  PARAMS=()
 
   while (("${#}")); do
     case "${1}" in

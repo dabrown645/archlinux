@@ -10,8 +10,20 @@
         "description": "Basic tools to build Arch Linux packages"
       },
       {
+        "name": "bash-completion",
+        "description": "Programmable completion for the bash shell"
+      },
+      {
         "name": "btrfs-progs",
         "description": "Btrfs filesystem utilities"
+      },
+      {
+        "name": "cronie",
+        "description": "Daemon that runs specified programs at scheduled times and related tools"
+      },
+      {
+        "name": "dmidecode",
+        "description": "Desktop Management Interface table related utilities"
       },
       {
         "name": "efibootmgr",
@@ -26,12 +38,12 @@
         "description": "The Linux kernel and modules"
       },
       {
-        "name": "linux-headers",
-        "description": "Headers and scripts for building modules for Linux Kernel"
-      },
-      {
         "name": "linux-firmware",
         "description": "Firmware files for Linux"
+      },
+      {
+        "name": "linux-headers",
+        "description": "Headers and scripts for building modules for Linux Kernel"
       },
       {
         "name": "linux-zen",
@@ -42,16 +54,20 @@
         "description": "Headers and scripts for building modules for the Linux ZEN Kernel"
       },
       {
+        "name": "man-db",
+        "description": "A utility for reading man pages"
+      },
+      {
+        "name": "systemd",
+        "description": "system and service manager"
+      },
+      {
+        "name": "systemd-sysvcompat",
+        "description": "sysvinit compat for systemd"
+      },
+      {
         "name": "zram-generator",
         "description": "Systemd unit generator for zram devices"
-      },
-      {
-        "name": "bash-completion",
-        "description": "Programmable completion for the bash shell"
-      },
-      {
-        "name": "dmidecode",
-        "description": "Desktop Management Interface table related utilities"
       }
     ]
   },
@@ -188,6 +204,14 @@
       {
         "name": "plasma-workspace",
         "description": "KDE Plasma Workspace"
+      },
+      {
+        "name": "sddm",
+        "description": "QML based X11 and Wayland display manager"
+      },
+      {
+        "name": "sddm-kcm",
+        "description": "KDE Config Module for SDDM"
       },
       {
         "name": "smartmontools",
@@ -346,6 +370,10 @@
         "description": "Low-latency audio/video router and processor - PulseAudio replacement"
       },
       {
+        "name": "sof-firmware",
+        "description": "Sound Open Firmware"
+      },
+      {
         "name": "wireplumber",
         "description": "Session / policy manager implementation for PipeWire"
       }
@@ -401,6 +429,10 @@
   },
   "snapper": {
     "packages": [
+      {
+        "name": "snapper",
+        "description": "A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping."
+      },
       {
         "name": "snapper-support",
         "description": "Support package for enabling Snapper with snap-pac and grub-btrfs"
@@ -1512,6 +1544,346 @@
       {
         "name": "zsh-theme-powerlevel10k-git",
         "description": "Powerlevel10k is a theme for Zsh. It emphasizes speed, flexibility and out-of-the-box experience."
+      }
+    ]
+  },
+  "filesystems": {
+    "packages": [
+      {
+        "name": "btrfs-progs",
+        "description": "Btrfs filesystem utilities"
+      },
+      {
+        "name": "dosfstools",
+        "description": "DOS filesystem utilities"
+      },
+      {
+        "name": "f2fs-tools",
+        "description": "Tools for Flash-Friendly File System (F2FS)"
+      },
+      {
+        "name": "jfsutils",
+        "description": "JFS filesystem utilities"
+      },
+      {
+        "name": "nilfs-utils",
+        "description": "A log-structured file system supporting continuous snapshotting (userspace utils)"
+      },
+      {
+        "name": "ntfs-3g",
+        "description": "NTFS filesystem driver and utilities"
+      },
+      {
+        "name": "xfsprogs",
+        "description": "XFS filesystem utilities"
+      }
+    ]
+  },
+  "yay_aur": {
+    "packages": [
+      {
+        "name": "networkmanager-support",
+        "description": "Metapkg for useful NetworkManager packages"
+      }
+    ]
+  },
+  "network": {
+    "packages": [
+      {
+        "name": "networkmanager",
+        "description": "Network connection manager and user applications"
+      }
+    ]
+  },
+  "jakoolit": {
+    "packages": [
+      {
+        "name": "adobe-source-code-pro-fonts",
+        "description": "Monospaced font family for user interface and coding environments"
+      },
+      {
+        "name": "bc",
+        "description": "An arbitrary precision calculator language"
+      },
+      {
+        "name": "blueman",
+        "description": "GTK+ Bluetooth Manager"
+      },
+      {
+        "name": "bluez-utils",
+        "description": "Development and debugging utilities for the bluetooth protocol stack"
+      },
+      {
+        "name": "brightnessctl",
+        "description": "Lightweight brightness control tool"
+      },
+      {
+        "name": "cava",
+        "description": "Console-based Audio Visualizer with support for multiple backends"
+      },
+      {
+        "name": "cliphist",
+        "description": "wayland clipboard manager"
+      },
+      {
+        "name": "fastfetch",
+        "description": "A feature-rich and performance oriented neofetch like system information tool"
+      },
+      {
+        "name": "ffmpegthumbnailer",
+        "description": "Lightweight video thumbnailer that can be used by file managers"
+      },
+      {
+        "name": "fzf",
+        "description": "Command-line fuzzy finder"
+      },
+      {
+        "name": "gjs",
+        "description": "Javascript Bindings for GNOME"
+      },
+      {
+        "name": "glib2-devel",
+        "description": "Low level core library - development files"
+      },
+      {
+        "name": "gnome-system-monitor",
+        "description": "View current processes and monitor system state"
+      },
+      {
+        "name": "gtk-engine-murrine",
+        "description": "GTK2 engine to make your desktop look like a 'murrina', an italian word meaning the art glass works done by Venicians glass blowers."
+      },
+      {
+        "name": "gvfs",
+        "description": "Virtual filesystem implementation for GIO"
+      },
+      {
+        "name": "gvfs-mtp",
+        "description": "Virtual filesystem implementation for GIO - MTP backend (Android, media player)"
+      },
+      {
+        "name": "hypridle",
+        "description": "hyprland’s idle daemon"
+      },
+      {
+        "name": "hyprlock",
+        "description": "hyprland’s GPU-accelerated screen locking utility"
+      },
+      {
+        "name": "hyprpolkitagent",
+        "description": "Simple polkit authentication agent for Hyprland, written in QT/QML"
+      },
+      {
+        "name": "imagemagick",
+        "description": "An image viewing/manipulation program"
+      },
+      {
+        "name": "inxi",
+        "description": "Full featured CLI system information tool"
+      },
+      {
+        "name": "jq",
+        "description": "Command-line JSON processor"
+      },
+      {
+        "name": "kvantum",
+        "description": "SVG-based theme engine for Qt6 (including config tool and extra themes)"
+      },
+      {
+        "name": "loupe",
+        "description": "A simple image viewer for GNOME"
+      },
+      {
+        "name": "lsd",
+        "description": "Modern ls with a lot of pretty colors and awesome icons"
+      },
+      {
+        "name": "mercurial",
+        "description": "A scalable distributed SCM tool"
+      },
+      {
+        "name": "meson",
+        "description": "High productivity build system"
+      },
+      {
+        "name": "mousepad",
+        "description": "Simple text editor for Xfce"
+      },
+      {
+        "name": "mpv",
+        "description": "a free, open source, and cross-platform media player"
+      },
+      {
+        "name": "mpv-mpris",
+        "description": "MPRIS plugin for mpv"
+      },
+      {
+        "name": "nano",
+        "description": "Pico editor clone with enhancements"
+      },
+      {
+        "name": "network-manager-applet",
+        "description": "Applet for managing network connections"
+      },
+      {
+        "name": "npm",
+        "description": "JavaScript package manager"
+      },
+      {
+        "name": "nvtop",
+        "description": "GPUs process monitoring for AMD, Intel and NVIDIA"
+      },
+      {
+        "name": "nwg-displays",
+        "description": "Output management utility for sway and Hyprland Wayland compositors"
+      },
+      {
+        "name": "nwg-look",
+        "description": "GTK settings editor adapted to work on wlroots-based compositors"
+      },
+      {
+        "name": "otf-font-awesome",
+        "description": "Iconic font designed for Bootstrap"
+      },
+      {
+        "name": "pacman-contrib",
+        "description": "Contributed scripts and tools for pacman systems"
+      },
+      {
+        "name": "pamixer",
+        "description": "Pulseaudio command-line mixer like amixer"
+      },
+      {
+        "name": "pavucontrol",
+        "description": "PulseAudio Volume Control"
+      },
+      {
+        "name": "playerctl",
+        "description": "mpris media player controller and lib for spotify, vlc, audacious, bmp, xmms2, and others."
+      },
+      {
+        "name": "python-pyquery",
+        "description": "A jquery-like library for python."
+      },
+      {
+        "name": "python-requests",
+        "description": "Python HTTP for Humans"
+      },
+      {
+        "name": "qalculate-gtk",
+        "description": "GTK frontend for libqalculate"
+      },
+      {
+        "name": "qt5ct",
+        "description": "Qt5 Configuration Utility"
+      },
+      {
+        "name": "qt6ct",
+        "description": "Qt 6 Configuration Utility"
+      },
+      {
+        "name": "rofi-wayland",
+        "description": "A window switcher, run dialog and dmenu replacement - fork with wayland support"
+      },
+      {
+        "name": "swappy",
+        "description": "A Wayland native snapshot editing tool"
+      },
+      {
+        "name": "swaync",
+        "description": "A simple GTK based notification daemon for Sway"
+      },
+      {
+        "name": "swww",
+        "description": "A Solution to your Wayland Wallpaper Woes"
+      },
+      {
+        "name": "thunar",
+        "description": "Modern, fast and easy-to-use file manager for Xfce"
+      },
+      {
+        "name": "thunar-archive-plugin",
+        "description": "Adds archive operations to the Thunar file context menus"
+      },
+      {
+        "name": "thunar-volman",
+        "description": "Automatic management of removable drives and media for Thunar"
+      },
+      {
+        "name": "ttf-droid",
+        "description": "General-purpose fonts released by Google as part of Android"
+      },
+      {
+        "name": "ttf-fantasque-nerd",
+        "description": "Patched font Fantasque Sans Mono from nerd fonts library"
+      },
+      {
+        "name": "ttf-fira-code",
+        "description": "Monospaced font with programming ligatures"
+      },
+      {
+        "name": "ttf-jetbrains-mono",
+        "description": "Typeface for developers, by JetBrains"
+      },
+      {
+        "name": "ttf-jetbrains-mono-nerd",
+        "description": "Patched font JetBrains Mono from nerd fonts library"
+      },
+      {
+        "name": "ttf-victor-mono-nerd",
+        "description": "Patched font Victor Mono from nerd fonts library"
+      },
+      {
+        "name": "tumbler",
+        "description": "Thumbnail service implementing the thumbnail management D-Bus specification"
+      },
+      {
+        "name": "typescript",
+        "description": "JavaScript with syntax for types"
+      },
+      {
+        "name": "umockdev",
+        "description": "Record/mock hardware devices for bug reports and regression tests"
+      },
+      {
+        "name": "unzip",
+        "description": "For extracting and viewing files in .zip archives"
+      },
+      {
+        "name": "wallust-git",
+        "description": "Generate colors from an image"
+      },
+      {
+        "name": "waybar",
+        "description": "Highly customizable Wayland bar for Sway and Wlroots based compositors"
+      },
+      {
+        "name": "wlogout",
+        "description": "Logout menu for wayland"
+      },
+      {
+        "name": "xarchiver",
+        "description": "GTK+ frontend to various command line archivers"
+      },
+      {
+        "name": "xdg-desktop-portal-gtk",
+        "description": "A backend implementation for xdg-desktop-portal using GTK"
+      },
+      {
+        "name": "yad",
+        "description": "A fork of zenity - display graphical dialogs from shell scripts or command line"
+      },
+      {
+        "name": "yt-dlp",
+        "description": "A youtube-dl fork with additional features and fixes"
+      },
+      {
+        "name": "zsh",
+        "description": "A very advanced and programmable command interpreter (shell) for UNIX"
+      },
+      {
+        "name": "zsh-completions",
+        "description": "Additional completion definitions for Zsh"
       }
     ]
   }

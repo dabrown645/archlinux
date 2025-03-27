@@ -2,13 +2,15 @@
 
 main() {
   source ./utils.sh
+  box_me "Formating Disk ${disk}"
+
   trap "cleanup" EXIT
 
   PARAMS=()
 
   # Defaults
-  cmd=""
-  dryrun=true
+  # cmd=""
+  # dryrun=false
   lsblkopt="-o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS"
 
   while (("${#}")); do

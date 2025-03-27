@@ -16,11 +16,16 @@ box_me "Allow pacman to do parallel downloads during install"
 ${cmd} fix_pacmanconf
 
 box_me "Run archinstall to install my basic configuration"
-${cmd} archinstall --config user_configuration.json \
+if ${cmd} archinstall --config user_configuration.json \
   --creds user_credentials.json \
-  --silent
-box_me "error code form archinstall ${?}"
-[[ {?} == 0 ]] || exit 1
+  --silent; then
+  box_me "return code form archinstall ${?}"
+else
+  box_me "return code form archinstall ${?}"
+  exit 1
+fi
+# box_me "return code form archinstall ${?}"
+# [[ ${?} == 0 ]] || exit 1
 
 box_me "Allow pacman to do parallel downloads on new system"
 # fix pacman.conf for parallel downloads
