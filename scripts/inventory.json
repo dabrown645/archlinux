@@ -50,16 +50,8 @@
         "description": "D-Bus service to access fingerprint readers"
       },
       {
-        "name": "game-devices-udev",
-        "description": "Udev rules for controllers"
-      },
-      {
         "name": "iio-sensor-proxy",
         "description": "IIO accelerometer sensor to input device proxy"
-      },
-      {
-        "name": "libinput-gestures",
-        "description": "Actions gestures on your touchpad using libinput"
       },
       {
         "name": "linuxconsole",
@@ -696,6 +688,14 @@
       {
         "name": "flatpak",
         "description": "Linux application sandboxing and distribution framework (formerly xdg-app)"
+      },
+      {
+        "name": "game-devices-udev",
+        "description": "Udev rules for controllers"
+      },
+      {
+        "name": "libinput-gestures",
+        "description": "Actions gestures on your touchpad using libinput"
       },
       {
         "name": "grep",
