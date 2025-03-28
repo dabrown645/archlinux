@@ -1987,7 +1987,7 @@
       }
     ]
   },
-  "virtualzation": {
+  "virtualization": {
     "packages": [
       {
         "name": "qemu-full",

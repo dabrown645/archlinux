@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 if [[ ${dryrun} == true ]]; then
   cmd="echo "
@@ -17,14 +17,14 @@ else
   CMD=${cmd}
 fi
 
-timedatectl set-timezone America/Los_Angeles
-timedatectl set-ntp true
+${cmd} sudo timedatectl set-timezone America/Los_Angeles
+${cmd} sudo timedatectl set-ntp true
 
-./snapper_install
+${cmd} sudo ./snapper_install
 
 box_me "Install arch specific post-install packages"
 
-packages=()
+packages=(git intel-ucode)
 packages+=("$(./info.py browsers)")
 packages+=("$(./info.py backrestore)")
 packages+=("$(./info.py mymisc)")
@@ -32,7 +32,9 @@ packages+=("$(./info.py office)")
 packages+=("$(./info.py jakoolit)")
 packages+=("$(./info.py virtualization)")
 packages+=("$(./info.py printersupport)")
-${CMD} pacman -S --needed --noconfirm ${packages}
+packages+=("$(./info.py archivers)")
+
+${cmd} sudo pacman -S --needed --noconfirm ${packages[@]}
 
 box_me "Setup JaKooLit hyprland"
-sh <(curl -L https://raw.githubusercontent.com/JaKooLit/Arch-Hyprland/main/auto-install.sh)
+${cmd} sh <(curl -L https://raw.githubusercontent.com/JaKooLit/Arch-Hyprland/main/auto-install.sh)
