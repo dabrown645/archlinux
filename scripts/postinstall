@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+
+if [[ ${dryrun} == true ]]; then
+  cmd="echo "
+else
+  cmd=""
+fi
+
+source utils.sh
+
+if [[ $(uname -n) == "archiso" ]]; then
+  mountpoint=$(grep mountpoint user_configuration.json | cut -f 4 -d '"')
+  echo "mountpoint=${mountpoint}"
+  CMD="${cmd} arch-chroot ${mountpoint} "
+else
+  mountpoint=""
+  CMD=${cmd}
+fi
+
+timedatectl set-timezone America/Los_Angeles
+timedatectl set-ntp true
+
+./snapper_install
+
+box_me "Install arch specific post-install packages"
+
+packages=()
+packages+=("$(./info.py browsers)")
+packages+=("$(./info.py backrestore)")
+packages+=("$(./info.py mymisc)")
+packages+=("$(./info.py office)")
+packages+=("$(./info.py jakoolit)")
+packages+=("$(./info.py virtualization)")
+packages+=("$(./info.py printersupport)")
+${CMD} pacman -S --needed --noconfirm ${packages}
+
+box_me "Setup JaKooLit hyprland"
+sh <(curl -L https://raw.githubusercontent.com/JaKooLit/Arch-Hyprland/main/auto-install.sh)

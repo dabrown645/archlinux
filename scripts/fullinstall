@@ -114,8 +114,8 @@ main() {
   ${CMD} grub-mkconfig -o /boot/grub/grub.cfg
 
   ${CMD} systemctl enable --now NetworkManager
-  ${CMD} timedatectl set-timezone America/Los_Angeles
-  ${CMD} timedatectl set-ntp true
+  # ${CMD} timedatectl set-timezone America/Los_Angeles
+  # ${CMD} timedatectl set-ntp true
 
   box_me "Provide root's password"
   ${CMD} passwd
@@ -130,8 +130,6 @@ main() {
   ./plasma_install
 
   ./hyprland_install
-
-  # ./snapper_install
 
 }
 

@@ -34,6 +34,70 @@
         "description": "GNU GRand Unified Bootloader"
       },
       {
+        "name": "android-udev",
+        "description": "Udev rules to connect Android devices to your linux box"
+      },
+      {
+        "name": "bolt",
+        "description": "Thunderbolt 3 device manager"
+      },
+      {
+        "name": "brightnessctl",
+        "description": "Lightweight brightness control tool"
+      },
+      {
+        "name": "fprintd",
+        "description": "D-Bus service to access fingerprint readers"
+      },
+      {
+        "name": "game-devices-udev",
+        "description": "Udev rules for controllers"
+      },
+      {
+        "name": "iio-sensor-proxy",
+        "description": "IIO accelerometer sensor to input device proxy"
+      },
+      {
+        "name": "libinput-gestures",
+        "description": "Actions gestures on your touchpad using libinput"
+      },
+      {
+        "name": "linuxconsole",
+        "description": "Set of utilities for joysticks and serial devices"
+      },
+      {
+        "name": "lirc",
+        "description": "Linux Infrared Remote Control utilities"
+      },
+      {
+        "name": "v4l-utils",
+        "description": "Userspace tools and conversion library for Video 4 Linux"
+      },
+      {
+        "name": "xdotool",
+        "description": "Command-line X11 automation tool"
+      },
+      {
+        "name": "xf86-input-elographics",
+        "description": "X.org Elographics TouchScreen input driver"
+      },
+      {
+        "name": "xf86-input-evdev",
+        "description": "X.org evdev input driver"
+      },
+      {
+        "name": "xf86-input-libinput",
+        "description": "Generic input driver for the X.Org server based on libinput"
+      },
+      {
+        "name": "xf86-input-void",
+        "description": "X.org void input driver"
+      },
+      {
+        "name": "xf86-input-wacom",
+        "description": "X.Org Wacom tablet driver"
+      },
+      {
         "name": "linux",
         "description": "The Linux kernel and modules"
       },
@@ -44,6 +108,10 @@
       {
         "name": "linux-headers",
         "description": "Headers and scripts for building modules for Linux Kernel"
+      },
+      {
+        "name": "lsb-release",
+        "description": "LSB version query program"
       },
       {
         "name": "linux-zen",
@@ -76,6 +144,10 @@
       {
         "name": "dolphin",
         "description": "KDE File Manager"
+      },
+      {
+        "name": "dolphin-plugins",
+        "description": "Extra Dolphin plugins"
       },
       {
         "name": "dunst",
@@ -174,8 +246,32 @@
         "description": "Archiving Tool"
       },
       {
+        "name": "plasma-applet-window-buttons",
+        "description": "Plasma applet in order to show window buttons in your panels"
+      },
+      {
+        "name": "plasma-browser-integration",
+        "description": "Components necessary to integrate browsers into the Plasma Desktop"
+      },
+      {
+        "name": "plasma-desktop",
+        "description": "KDE Plasma Desktop"
+      },
+      {
+        "name": "plasma6-applets-window-title",
+        "description": "Plasma 6 applet that shows the application title and icon for active window"
+      },
+      {
+        "name": "plasma6-wallpapers-blurredwallpaper",
+        "description": "KDE Plasma wallpaper plugin that blurs the wallpaper when a window is active"
+      },
+      {
         "name": "dolphin",
         "description": "KDE File Manager"
+      },
+      {
+        "name": "dolphin-plugins",
+        "description": "Extra Dolphin plugins"
       },
       {
         "name": "htop",
@@ -279,11 +375,11 @@
     "packages": [
       {
         "name": "dkms",
-        "description": "Dynamic Kernel Modules System"
+        "description": "dynamic kernel modules system"
       },
       {
         "name": "nvidia-open-dkms",
-        "description": "NVIDIA open kernel modules - module sources"
+        "description": "nvidia open kernel modules - module sources"
       }
     ]
   },
@@ -586,10 +682,6 @@
         "description": "All-in-one voice and text chat for gamers"
       },
       {
-        "name": "enpass-bin",
-        "description": ""
-      },
-      {
         "name": "epson-inkjet-printer-escpr2",
         "description": "Epson Inkjet Printer Driver 2 (ESC/P-R) for Linux"
       },
@@ -618,8 +710,8 @@
         "description": "A front-end to ssh-agent, allowing one long-running ssh-agent process per system, rather than per login"
       },
       {
-        "name": "libreoffice-fresh",
-        "description": "LibreOffice branch which contains new features and program enhancements"
+        "name": "oh-my-posh-bin",
+        "description": "A prompt theme engine for any shell."
       },
       {
         "name": "nix",
@@ -628,14 +720,6 @@
       {
         "name": "pax",
         "description": "Portable Archive Interchange - the POSIX standard archive tool for cpio and tar formats"
-      },
-      {
-        "name": "printer-support",
-        "description": "Meta-package for packages needed to use printers"
-      },
-      {
-        "name": "qemu-full",
-        "description": "A full QEMU setup"
       },
       {
         "name": "refind",
@@ -662,12 +746,24 @@
         "description": "A new bootable USB solution"
       },
       {
-        "name": "virt-manager-meta",
-        "description": "Meta-package for libvirt/QEMU/KVM support using virt-manager"
-      },
-      {
         "name": "yazi",
         "description": "Blazing fast terminal file manager written in Rust, based on async I/O"
+      }
+    ]
+  },
+  "office": {
+    "packages": [
+      {
+        "name": "betterbird-bin",
+        "description": "EN-US // Betterbird is a fine-tuned version of Mozilla Thunderbird, Thunderbird on steroids, if you will."
+      },
+      {
+        "name": "libreoffice-fresh",
+        "description": "LibreOffice branch which contains new features and program enhancements"
+      },
+      {
+        "name": "okular",
+        "description": "Document Viewer"
       },
       {
         "name": "zoom",
@@ -1323,7 +1419,7 @@
       },
       {
         "name": "xwaylandvideobridge",
-        "description": ""
+        "description": "Utility to allow streaming Wayland windows to X applications"
       }
     ]
   },
@@ -1581,6 +1677,10 @@
   },
   "yay_aur": {
     "packages": [
+      {
+        "name": "enpass-bin",
+        "description": "A multiplatform password manager"
+      },
       {
         "name": "networkmanager-support",
         "description": "Metapkg for useful NetworkManager packages"
@@ -1884,6 +1984,278 @@
       {
         "name": "zsh-completions",
         "description": "Additional completion definitions for Zsh"
+      }
+    ]
+  },
+  "virtualzation": {
+    "packages": [
+      {
+        "name": "qemu-full",
+        "description": "A full QEMU setup"
+      },
+      {
+        "name": "quickemu-git",
+        "description": "Quickly create and run optimised Windows, macOS and Linux desktop virtual machines"
+      },
+      {
+        "name": "bridge-utils",
+        "description": "Utilities for configuring the Linux ethernet bridge"
+      },
+      {
+        "name": "dnsmasq",
+        "description": "Lightweight, easy to configure DNS forwarder and DHCP server"
+      },
+      {
+        "name": "iptables-nft",
+        "description": "Linux kernel packet control tool (using nft interface)"
+      },
+      {
+        "name": "edk2-ovmf",
+        "description": "Firmware for Virtual Machines (x86_64, i686)"
+      },
+      {
+        "name": "libvirt",
+        "description": "API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)"
+      },
+      {
+        "name": "gnu-netcat",
+        "description": "GNU rewrite of netcat, the network piping application"
+      },
+      {
+        "name": "qemu-desktop",
+        "description": "A QEMU setup for desktop environments"
+      },
+      {
+        "name": "radvd",
+        "description": "IPv6 Router Advertisement Daemon"
+      },
+      {
+        "name": "virt-viewer",
+        "description": "A lightweight interface for interacting with the graphical display of virtualized guest OS."
+      }
+    ]
+  },
+  "printersupport": {
+    "packages": [
+      {
+        "name": "a2ps",
+        "description": "An Any to PostScript filter"
+      },
+      {
+        "name": "bluez-cups",
+        "description": "CUPS printer backend for Bluetooth printers"
+      },
+      {
+        "name": "cups",
+        "description": "OpenPrinting CUPS - daemon package"
+      },
+      {
+        "name": "cups-filters",
+        "description": "OpenPrinting CUPS Filters"
+      },
+      {
+        "name": "cups-pdf",
+        "description": "PDF printer for cups"
+      },
+      {
+        "name": "cups-pk-helper",
+        "description": "A helper that makes system-config-printer use PolicyKit"
+      },
+      {
+        "name": "foomatic-db",
+        "description": "Foomatic - The collected knowledge about printers, drivers, and driver options in XML files, used by foomatic-db-engine to generate PPD files."
+      },
+      {
+        "name": "foomatic-db-engine",
+        "description": "Foomatic - Foomatic's database engine generates PPD files from the data in Foomatic's XML database. It also contains scripts to directly generate print queues and handle jobs."
+      },
+      {
+        "name": "foomatic-db-gutenprint-ppds",
+        "description": "simplified prebuilt ppd files"
+      },
+      {
+        "name": "foomatic-db-nonfree",
+        "description": "Foomatic - database extension consisting of manufacturer-supplied PPD files released under non-free licenses"
+      },
+      {
+        "name": "foomatic-db-nonfree-ppds",
+        "description": "Foomatic - non-free PPDs from printer manufacturers"
+      },
+      {
+        "name": "foomatic-db-ppds",
+        "description": "Foomatic - PPDs from printer manufacturers"
+      },
+      {
+        "name": "ghostscript",
+        "description": "An interpreter for the PostScript language"
+      },
+      {
+        "name": "gsfonts",
+        "description": "(URW)++ base 35 font set"
+      },
+      {
+        "name": "gutenprint",
+        "description": "Top quality printer drivers for POSIX systems"
+      },
+      {
+        "name": "noto-color-emoji-fontconfig",
+        "description": "Fontconfig to enable Noto Color Emoji fonts where emojis can be displayed"
+      },
+      {
+        "name": "splix",
+        "description": "CUPS drivers for SPL (Samsung Printer Language) printers"
+      }
+    ]
+  },
+  "TBD": {
+    "packages": [
+      {
+        "name": "lazygit",
+        "description": "Simple terminal UI for git commands"
+      },
+      {
+        "name": "ollama",
+        "description": "Create, run and share large language models (LLMs)"
+      },
+      {
+        "name": "rate-mirrors",
+        "description": "Everyday-use client-side map-aware mirror ranking tool"
+      },
+      {
+        "name": "refind",
+        "description": "An EFI boot manager"
+      },
+      {
+        "name": "refind-docs",
+        "description": "An EFI boot manager - documentation"
+      },
+      {
+        "name": "reflector-simple",
+        "description": "Simple GUI wrapper for 'reflector'."
+      },
+      {
+        "name": "restic",
+        "description": "Fast, secure, efficient backup program"
+      },
+      {
+        "name": "resvg",
+        "description": "SVG rendering library and CLI"
+      },
+      {
+        "name": "rsync",
+        "description": "A fast and versatile file copying tool for remote and local files"
+      },
+      {
+        "name": "rustic",
+        "description": "Fast, encrypted, deduplicated backups powered by Rust (reads and writes restic repos)"
+      },
+      {
+        "name": "samba-support",
+        "description": "Meta-package and configuration for Samba support"
+      },
+      {
+        "name": "scanner-support",
+        "description": "Meta-package for scanner support"
+      },
+      {
+        "name": "shellcheck",
+        "description": "Shell script analysis tool"
+      },
+      {
+        "name": "simple-scan",
+        "description": "Simple scanning utility"
+      },
+      {
+        "name": "sshfs",
+        "description": "FUSE client based on the SSH File Transfer Protocol"
+      },
+      {
+        "name": "swaylock-effects-git",
+        "description": "A fancier screen locker for Wayland."
+      },
+      {
+        "name": "system-config-printer",
+        "description": "A CUPS printer configuration tool and status applet"
+      },
+      {
+        "name": "traceroute",
+        "description": "Tracks the route taken by packets over an IP network"
+      },
+      {
+        "name": "udiskie",
+        "description": "Removable disk automounter using udisks"
+      },
+      {
+        "name": "ugrep",
+        "description": "ultra fast grep with interactive TUI, fuzzy search, boolean queries, hexdumps and more"
+      },
+      {
+        "name": "unace",
+        "description": "An extraction tool for the proprietary ace archive format"
+      },
+      {
+        "name": "unarchiver",
+        "description": "unar and lsar"
+      },
+      {
+        "name": "unarj",
+        "description": "Utility to extract, test and view the contents of archives created with the ARJ archiver"
+      },
+      {
+        "name": "unrar",
+        "description": "The RAR uncompression program"
+      },
+      {
+        "name": "update-grub",
+        "description": "Simple wrapper around grub-mkconfig"
+      },
+      {
+        "name": "usbutils",
+        "description": "A collection of USB tools to query connected USB devices"
+      },
+      {
+        "name": "ventoy-bin",
+        "description": "A new bootable USB solution"
+      },
+      {
+        "name": "wezterm",
+        "description": "A GPU-accelerated cross-platform terminal emulator and multiplexer"
+      },
+      {
+        "name": "whois",
+        "description": "Intelligent WHOIS client"
+      },
+      {
+        "name": "wireless-regdb",
+        "description": "Central Regulatory Domain Database"
+      },
+      {
+        "name": "xdg-user-dirs",
+        "description": "Manage user directories like ~/Desktop and ~/Music"
+      },
+      {
+        "name": "xorg-xhost",
+        "description": "Server access control program for X"
+      },
+      {
+        "name": "xorg-xinput",
+        "description": "Small commandline tool to configure devices"
+      },
+      {
+        "name": "xsel",
+        "description": "Command-line program for getting and setting the contents of the X selection"
+      },
+      {
+        "name": "xwaylandvideobridge",
+        "description": "Utility to allow streaming Wayland windows to X applications"
+      },
+      {
+        "name": "yazi",
+        "description": "Blazing fast terminal file manager written in Rust, based on async I/O"
+      },
+      {
+        "name": "zoom",
+        "description": "Video Conferencing and Web Conferencing Service"
       }
     ]
   }
