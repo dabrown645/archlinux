@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 if [[ ${dryrun} == true ]]; then
   cmd="echo "
@@ -17,6 +17,8 @@ else
   CMD=${cmd}
 fi
 
+${CMD} pacman-key --init
+${CMD} pacman-key --populate
 ${CMD} pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 ${CMD} pacman-key --lsign-key 3056513887B78AEB
 ${CMD} pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
