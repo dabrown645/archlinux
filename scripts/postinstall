@@ -30,8 +30,8 @@ packages+=("$(./info.py backrestore)")
 packages+=("$(./info.py mymisc)")
 packages+=("$(./info.py office)")
 packages+=("$(./info.py jakoolit)")
-packages+=("$(./info.py virtualization)"
-${cmd} sudo pacman -S --needed --noconfirm ${packages[@]}
+packages+=("$(./info.py virtualization)")
+${cmd} sudo pacman -Syu --needed --noconfirm ${packages[@]}
 
 box_me "Setup JaKooLit hyprland"
 ${cmd} sh <(curl -L https://raw.githubusercontent.com/JaKooLit/Arch-Hyprland/main/auto-install.sh)

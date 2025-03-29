@@ -82,7 +82,7 @@ box_me() {
 }
 
 mylsblk() {
-  lsblkopt="NAME,FSTYPE,PARTLABEL,MOUNTPOINTS"
+  lsblkopt="NAME,FSTYPE,PARTLABEL,MOUNTPOINTS,UUID"
   # shellcheck disable=SC2086
   lsblk -o "${lsblkopt}" ${1}
 }
