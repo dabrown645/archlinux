@@ -2006,10 +2006,6 @@
         "description": "Lightweight, easy to configure DNS forwarder and DHCP server"
       },
       {
-        "name": "iptables-nft",
-        "description": "Linux kernel packet control tool (using nft interface)"
-      },
-      {
         "name": "edk2-ovmf",
         "description": "Firmware for Virtual Machines (x86_64, i686)"
       },

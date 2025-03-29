@@ -30,10 +30,7 @@ packages+=("$(./info.py backrestore)")
 packages+=("$(./info.py mymisc)")
 packages+=("$(./info.py office)")
 packages+=("$(./info.py jakoolit)")
-packages+=("$(./info.py virtualization)")
-packages+=("$(./info.py printersupport)")
-packages+=("$(./info.py archivers)")
-
+packages+=("$(./info.py virtualization)"
 ${cmd} sudo pacman -S --needed --noconfirm ${packages[@]}
 
 box_me "Setup JaKooLit hyprland"

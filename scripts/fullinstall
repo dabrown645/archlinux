@@ -114,8 +114,12 @@ main() {
   ${CMD} grub-mkconfig -o /boot/grub/grub.cfg
 
   ${CMD} systemctl enable --now NetworkManager
-  # ${CMD} timedatectl set-timezone America/Los_Angeles
-  # ${CMD} timedatectl set-ntp true
+
+  ./chaotic-aur
+
+  ./plasma_install
+
+  ./hyprland_install
 
   box_me "Provide root's password"
   ${CMD} passwd
@@ -124,12 +128,6 @@ main() {
   ${cmd} fix_sudoers_wheel "${mountpoint}/etc/sudoers"
   box_me "Provide dabrown's password"
   ${CMD} passwd dabrown
-
-  ./chaotic-aur
-
-  ./plasma_install
-
-  ./hyprland_install
 
 }
 
