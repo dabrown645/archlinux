@@ -19,10 +19,38 @@ fix_grub-btrfs() {
     "${grub_btrfs_config}"
 }
 
-fix_locale_gen() {
-  local_gen=${1:-/etc/locale.gen}
+fix_locale_conf() {
+  locale_conf=${1:-/etc/locale.conf}
 
-  sed -i -e 's/#*en_US.UTF-8/en_US.UTF-8/' "${local_gen}"
+  {
+    echo "LANG=en_US.UTF-8"
+    echo "LC_ADDRESS=en_US.UTF-8"
+    echo "LC_IDENTIFICATION=en_US.UTF-8"
+    echo "LC_MEASUREMENT=en_US.UTF-8"
+    echo "LC_MONETARY=en_US.UTF-8"
+    echo "LC_NAME=en_US.UTF-8"
+    echo "LC_NUMERIC=en_US.UTF-8"
+    echo "LC_PAPER=en_US.UTF-8"
+    echo "LC_TELEPHONE=en_US.UTF-8"
+    echo "LC_TIME=en_US.UTF-8"
+  } >"${locale_conf}"
+}
+
+fix_fstab() {
+  set -x
+  prefix=${1:- }
+
+  for dir in $(grep subvol ./fstab | cut -f 2 -d ' '); do
+    mkdir -p ${prefix}/${dir}
+  done
+
+  for dir in $(grep bind ./fstab | cut -f4 -d'/'); do
+    mkdir -p ${prefix}/home/dabrown/${dir}
+  done
+
+  cat ./fstab >>${prefix}/etc/fstab
+  set +x
+
 }
 
 fix_locale_conf() {
@@ -77,6 +105,7 @@ box_me() {
   echo "║ ${s} ║" # U+2550-255f
   echo "╚══${s//?/═}╝"
   tput sgr0
+  sleep 3
   # 0 1 2 3 4 5 6 7 8 9 0 a b c d e f
   # ═ ║ ╒ ╓ ╔ ╕ ╖ ╗ ╘ ╙ ═ ╚ ╛ ╜ ╝ ≞ ╟
 }

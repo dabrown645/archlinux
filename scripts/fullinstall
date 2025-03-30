@@ -103,23 +103,29 @@ main() {
 
   ${CMD} mkinitcpio -P
 
-  #Need grub installation
-  ${CMD} grub-install \
-    --target=x86_64-efi \
-    --efi-directory=/boot/efi \
-    --boot-directory=/boot \
-    --bootloader-id=Arch \
-    --removable
-
-  ${CMD} grub-mkconfig -o /boot/grub/grub.cfg
-
   ${CMD} systemctl enable --now NetworkManager
 
+  box_me "Setting up chaotic-aur"
   ./chaotic-aur
 
+  box_me "Installing Plasma"
   ./plasma_install
 
+  box_me "Installing Hyprland"
   ./hyprland_install
+
+  box_me "Starting grub install/config"
+  #Need grub installation
+  # ${CMD} grub-install \
+  #   --target=x86_64-efi \
+  #   --efi-directory=/boot/efi \
+  #   --bootloader-id=Arch
+  # # --boot-directory=/boot \
+  #
+  # ${CMD} grub-mkconfig -o /boot/grub/grub.cfg
+  # read -p "check out groub install" ans
+
+  # ${cmd} fix_fstab ${mountpoint}
 
   box_me "Provide root's password"
   ${CMD} passwd

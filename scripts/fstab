@@ -1,0 +1,19 @@
+
+
+
+#UUID=198c4fcc-8aff-4334-98cb-8b8099fa9575 /Storage	 btrfs	 defaults,noatime,compress=zstd 0 0
+PARTLABEL=storage /Storage/dabrown	 btrfs	 subvol=/@dabrown,defaults,noatime,compress=zstd 0 0
+
+PARTLABEL=storage /Storage/Backups	 btrfs	 subvol=/@backup,defaults,noatime,compress=zstd 0 0
+
+
+/Storage/dabrown/Code		/home/dabrown/Code	none	bind
+/Storage/dabrown/Desktop	/home/dabrown/Desktop	none	bind
+/Storage/dabrown/Documents	/home/dabrown/Documents	none	bind
+/Storage/dabrown/Downloads	/home/dabrown/Downloads	none	bind
+/Storage/dabrown/Music		/home/dabrown/Music	none	bind
+/Storage/dabrown/Pictures	/home/dabrown/Pictures	none	bind
+/Storage/dabrown/Public		/home/dabrown/Public	none	bind
+/Storage/dabrown/Templates	/home/dabrown/Templates	none	bind
+/Storage/dabrown/Videos		/home/dabrown/Videos	none	bind
+/Storage/dabrown/VMS		/home/dabrown/VMS	none	bind

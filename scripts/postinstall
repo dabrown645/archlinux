@@ -31,6 +31,8 @@ packages+=("$(./info.py mymisc)")
 packages+=("$(./info.py office)")
 packages+=("$(./info.py jakoolit)")
 packages+=("$(./info.py virtualization)")
+echo ${packages[@]}
+read -p "waiting on review" ans
 ${cmd} sudo pacman -Syu --needed --noconfirm ${packages[@]}
 
 box_me "Setup JaKooLit hyprland"
