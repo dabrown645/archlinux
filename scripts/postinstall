@@ -36,4 +36,8 @@ read -p "waiting on review" ans
 ${cmd} sudo pacman -Syu --needed --noconfirm ${packages[@]}
 
 box_me "Setup JaKooLit hyprland"
-${cmd} sh <(curl -L https://raw.githubusercontent.com/JaKooLit/Arch-Hyprland/main/auto-install.sh)
+${cmd} git clone --depth=1 https://github.com/JaKooLit/Arch-Hyprland.git ~/Arch-Hyprland
+${cmd} cd ~/Arch-Hyprland
+${cmd} chmod +x install.sh
+${cmd} ./install.sh
+# ${cmd} sh <(curl -L https://raw.githubusercontent.com/JaKooLit/Arch-Hyprland/main/auto-install.sh)
