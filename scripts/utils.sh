@@ -19,6 +19,12 @@ fix_grub-btrfs() {
     "${grub_btrfs_config}"
 }
 
+fix_locale_gen() {
+  locale_gen=${1:-/etc/locale.gen}
+
+  sed -i -e 's/#en_US.UTF-8/en_US.UTF-8/' ${locale_gen}
+}
+
 fix_locale_conf() {
   locale_conf=${1:-/etc/locale.conf}
 

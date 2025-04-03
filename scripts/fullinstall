@@ -81,6 +81,7 @@ main() {
   packages+=("$(./info.py editors)")
   packages+=("$(./info.py filesystems)")
   packages+=("$(./info.py nvidia_open_prop_graphic)")
+  packages+=("$(./info.py open_video_graphic)")
   packages+=("$(./info.py pipewire)")
   packages+=("$(./info.py archivers)")
 
