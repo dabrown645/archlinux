@@ -11,6 +11,7 @@ main() {
   # Defaults
   # cmd=""
   # dryrun=false
+  mountonly=false
   lsblkopt="-o NAME,FSTYPE,PARTLABEL,MOUNTPOINTS"
 
   while (("${#}")); do
@@ -20,6 +21,7 @@ main() {
       exit 0
       ;;
     -d | --dryrun) dryrun=true ;;
+    -m | --mountonly) mountonly=true ;;
     --* | -*) # unsupported flags
       echo "Error: Unsupported flag ${1}" >&2
       usage
@@ -45,60 +47,64 @@ main() {
   fi
 
   disk=${1}
+  rootdisk=/dev/disk/by-partlabel/archlinux
 
   ${cmd} lsblk ${lsblkopt} ${disk}
   echo ""
 
-  while read -ru 7 name partlabel rest; do
-    case ${partlabel} in
-    EFI | EPS)
-      read -ru 2 -p "Do you want to reformat ${partlabel} /dev/${name} [YES/NO]-> " ans
-      if [[ "${ans}" == "YES" ]]; then
-        ${cmd} mkfs.vfat -F32 -n EFI /dev/disk/by-partlabel/EFI
-        box_me "${partlabel} has been reformated"
-      else
-        box_me "${partlabel} has NOT been formated"
-      fi
-      ;;
-    SWAP | swap)
-      ${cmd} swapoff --all
-      ${cmd} mkswap /dev/disk/by-partlabel/swap
-      ${cmd} swapon
-      ;;
-    archlinux)
-      read -ru 2 -p "Do you want to reformat ${partlabel} /dev/${name} [YES/NO]-> " ans
-      if [[ "${ans}" == "YES" ]]; then
-        #TODO: add encryption of root volume
-        rootdisk=/dev/disk/by-partlabel/archlinux
+  if ! ${mountonly}; then
+    while read -ru 7 name partlabel rest; do
+      case ${partlabel} in
+      EFI | EPS)
+        read -ru 2 -p "Do you want to reformat ${partlabel} /dev/${name} [YES/NO]-> " ans
+        if [[ "${ans}" == "YES" ]]; then
+          ${cmd} mkfs.vfat -F32 -n EFI /dev/disk/by-partlabel/EFI
+          box_me "${partlabel} has been reformated"
+        else
+          box_me "${partlabel} has NOT been formated"
+        fi
+        ;;
+      SWAP | swap)
+        ${cmd} swapoff --all
+        ${cmd} mkswap /dev/disk/by-partlabel/swap
+        ${cmd} swapon
+        ;;
+      archlinux)
+        read -ru 2 -p "Do you want to reformat ${partlabel} /dev/${name} [YES/NO]-> " ans
+        if [[ "${ans}" == "YES" ]]; then
+          #TODO: add encryption of root volume
+          rootdisk=/dev/disk/by-partlabel/archlinux
+  
+          ${cmd} mkfs.btrfs -f -L archlinux ${rootdisk}
+          ${cmd} mount --mkdir ${rootdisk} /mnt/archinstall
+  
+          ${cmd} btrfs subvolume create /mnt/archinstall/@
+          ${cmd} btrfs subvolume create /mnt/archinstall/@home
+          ${cmd} btrfs subvolume create /mnt/archinstall/@root
+          ${cmd} btrfs subvolume create /mnt/archinstall/@srv
+          ${cmd} btrfs subvolume create /mnt/archinstall/@cache
+          ${cmd} btrfs subvolume create /mnt/archinstall/@log
+          ${cmd} btrfs subvolume create /mnt/archinstall/@tmp
+          ${cmd} btrfs subvolume create /mnt/archinstall/@images
+          ${cmd} btrfs subvolume create /mnt/archinstall/@.snapshots
+          box_me "${partlabel} has been reformated"
+        else
+          box_me "${partlabel} has NOT been formated"
+        fi
+        ;;
+      *)
+        printf "%s not used during installation\n" ${partlabel}
+        ;;
+      esac
 
-        ${cmd} mkfs.btrfs -f -L archlinux ${rootdisk}
-        ${cmd} mount --mkdir ${rootdisk} /mnt/archinstall
+    done 7<<<$(
+      lsblk -o NAME,PARTLABEL ${disk} |
+        grep -E "${disk##*/}[0-9]|${disk##*/}p[0-9]" |
+        sed -e s'/..//'
+    )
 
-        ${cmd} btrfs subvolume create /mnt/archinstall/@
-        ${cmd} btrfs subvolume create /mnt/archinstall/@home
-        ${cmd} btrfs subvolume create /mnt/archinstall/@root
-        ${cmd} btrfs subvolume create /mnt/archinstall/@srv
-        ${cmd} btrfs subvolume create /mnt/archinstall/@cache
-        ${cmd} btrfs subvolume create /mnt/archinstall/@log
-        ${cmd} btrfs subvolume create /mnt/archinstall/@tmp
-        ${cmd} btrfs subvolume create /mnt/archinstall/@images
-        ${cmd} btrfs subvolume create /mnt/archinstall/@.snapshots
-        box_me "${partlabel} has been reformated"
-      else
-        box_me "${partlabel} has NOT been formated"
-      fi
-      ;;
-    *)
-      printf "%s not used during installation\n" ${partlabel}
-      ;;
-    esac
-  done 7<<<$(
-    lsblk -o NAME,PARTLABEL ${disk} |
-      grep -E "${disk##*/}[0-9]|${disk##*/}p[0-9]" |
-      sed -e s'/..//'
-  )
-
-  ${cmd} umount -R /mnt/archinstall
+    ${cmd} umount -R /mnt/archinstall
+  fi
 
   ${cmd} mount --mkdir --options subvol=/@,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall
   ${cmd} mount --mkdir --options subvol=/@home,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/home

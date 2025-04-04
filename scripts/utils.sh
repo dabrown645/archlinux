@@ -88,7 +88,7 @@ fix_hostname() {
   hostname=${1:-/etc/hostname}
 
   {
-    echo "archlinux"
+    echo "rog1"
   } >"${hostname}"
 }
 

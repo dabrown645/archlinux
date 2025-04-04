@@ -99,7 +99,7 @@ main() {
 
   # ${cmd} fix_localtime "${mountpoint}/etc/localtime"
   ${cmd} fix_locale_conf "${mountpoint}/etc/locale.conf"
-  ${cmd} fix_vconsole_conf "${mountpoint}/etc/vscondole.conf"
+  ${cmd} fix_vconsole_conf "${mountpoint}/etc/vsconsole.conf"
   ${cmd} fix_hostname "${mountpoint}/etc/hostname"
 
   ${CMD} mkinitcpio -P
@@ -135,6 +135,8 @@ main() {
 
   ${CMD} useradd --create-home --groups wheel dabrown
   ${cmd} fix_sudoers_wheel "${mountpoint}/etc/sudoers"
+  ${cmd} chown -R dabrown:dabrown "${mountpoing}/home/dabrown"
+
   box_me "Provide dabrown's password"
   ${CMD} passwd dabrown
 
