@@ -1,0 +1,13 @@
+[Unit]
+Description=Mount /Storage/dabrown
+After=local-fs.target
+
+[Mount]
+What=/dev/disk/by-partlabel/storage
+Where=/Storage/dabrown
+Type=btrfs
+Options=subvol=@dabrown,defaults,noatime,compress=zstd
+
+[Install]
+WantedBy=multi-user.target
+

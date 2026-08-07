@@ -1,0 +1,21 @@
+  File "/home/dabrown/Public/archlinux/refactor/.venv/lib/python3.14/site-packages/pyinfra_cli/cli.py", line 283, in cli
+    _main(*args, **kwargs)
+    ~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/dabrown/Public/archlinux/refactor/.venv/lib/python3.14/site-packages/pyinfra_cli/cli.py", line 414, in _main
+    inventory = make_inventory(
+        inventory,
+    ...<2 lines>...
+        group_data_directories=group_data,
+    )
+  File "/home/dabrown/Public/archlinux/refactor/.venv/lib/python3.14/site-packages/pyinfra_cli/inventory.py", line 207, in make_inventory
+    return make_inventory_from_files(inventory, override_data, cwd, group_data_directories)
+  File "/home/dabrown/Public/archlinux/refactor/.venv/lib/python3.14/site-packages/pyinfra_cli/inventory.py", line 319, in make_inventory_from_files
+    groups = _get_groups_from_filename(inventory_filename)
+  File "/home/dabrown/Public/archlinux/refactor/.venv/lib/python3.14/site-packages/pyinfra_cli/inventory.py", line 125, in _get_groups_from_filename
+    attrs = exec_file(inventory_filename, return_locals=True)
+  File "/home/dabrown/Public/archlinux/refactor/.venv/lib/python3.14/site-packages/pyinfra_cli/util.py", line 57, in exec_file
+    code = compile(code_str, filename, "exec")
+  File "inventory.py", line 3
+    local_group = [
+                  ^
+SyntaxError: '[' was never closed

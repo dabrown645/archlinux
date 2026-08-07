@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind /Storage/dabrown/VMS to /home/dabrown/VMS
+After=Storage-dabrown.mount
+Requires=Storage-dabrown.mount
+
+[Mount]
+What=/Storage/dabrown/VMS
+Where=/home/dabrown/VMS
+Type=none
+Options=bind
+
+[Install]
+WantedBy=multi-user.target

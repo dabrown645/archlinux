@@ -1,0 +1,13 @@
+[Unit]
+Description=Mount /Storage/Backups
+After=local-fs.target
+
+[Mount]
+What=/dev/disk/by-partlabel/storage
+Where=/Storage/Backups
+Type=btrfs
+Options=subvol=@backup,defaults,noatime,compress=zstd
+
+[Install]
+WantedBy=multi-user.target
+

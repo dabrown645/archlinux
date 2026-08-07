@@ -1,0 +1,28 @@
+from pyinfra.operations import pacman
+
+packages = [
+    "ttf-droid",
+    "ttf-fira-code",
+    "ttf-jetbrains-mono",
+    "ttf-jetbrains-mono-nerd",
+]
+
+
+def install() -> None:
+    global packages
+    pacman.packages(
+        name="Install Fonts",
+        packages=packages,
+        present=True,
+        update=True,
+    )
+
+
+def remove() -> None:
+    global packages
+    pacman.packages(
+        name="Remove Fonts",
+        packages=packages,
+        present=False,
+        update=True,
+    )

@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind /Storage/dabrown/Pictures to /home/dabrown/Pictures
+After=Storage-dabrown.mount
+Requires=Storage-dabrown.mount
+
+[Mount]
+What=/Storage/dabrown/Pictures
+Where=/home/dabrown/Pictures
+Type=none
+Options=bind
+
+[Install]
+WantedBy=multi-user.target

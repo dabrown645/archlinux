@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind /Storage/dabrown/Desktop to /home/dabrown/Desktop
+After=Storage-dabrown.mount
+Requires=Storage-dabrown.mount
+
+[Mount]
+What=/Storage/dabrown/Desktop
+Where=/home/dabrown/Desktop
+Type=none
+Options=bind
+
+[Install]
+WantedBy=multi-user.target

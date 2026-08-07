@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind /Storage/dabrown/Downloads to /home/dabrown/Downloads
+After=Storage-dabrown.mount
+Requires=Storage-dabrown.mount
+
+[Mount]
+What=/Storage/dabrown/Downloads
+Where=/home/dabrown/Downloads
+Type=none
+Options=bind
+
+[Install]
+WantedBy=multi-user.target

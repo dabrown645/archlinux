@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind /Storage/dabrown/Public to /home/dabrown/Public
+After=Storage-dabrown.mount
+Requires=Storage-dabrown.mount
+
+[Mount]
+What=/Storage/dabrown/Public
+Where=/home/dabrown/Public
+Type=none
+Options=bind
+
+[Install]
+WantedBy=multi-user.target
