@@ -8,7 +8,6 @@ packages = [
 
 
 def install() -> None:
-    global packages
     pacman.packages(
         name="Install rog software",
         packages=packages,
@@ -18,7 +17,6 @@ def install() -> None:
 
 
 def remove() -> None:
-    global packages
     pacman.packages(
         name="Remove rog software",
         packages=packages,

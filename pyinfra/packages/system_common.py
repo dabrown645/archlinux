@@ -19,7 +19,6 @@ packages = [
 
 
 def install() -> None:
-    global packages
     pacman.packages(
         name="Install Common System",
         packages=packages,
@@ -29,7 +28,6 @@ def install() -> None:
 
 
 def remove() -> None:
-    global packages
     pacman.packages(
         name="Remove Common System",
         packages=packages,

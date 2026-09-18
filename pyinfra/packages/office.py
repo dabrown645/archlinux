@@ -10,7 +10,6 @@ packages = [
 
 
 def install() -> None:
-    global packages
     pacman.packages(
         name="Install Office Products",
         packages=packages,
@@ -20,7 +19,6 @@ def install() -> None:
 
 
 def remove() -> None:
-    global packages
     pacman.packages(
         name="Remove Office Products",
         packages=packages,

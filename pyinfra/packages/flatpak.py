@@ -12,8 +12,6 @@ flatpaks = [
 
 
 def install() -> None:
-    global packages
-    global flatpaks
 
     pacman.packages(
         name="Install flatpak",
@@ -30,8 +28,6 @@ def install() -> None:
 
 
 def remove() -> None:
-    global packages
-    global flatpaks
 
     pacman.packages(
         name="Remove flatpak",

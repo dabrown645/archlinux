@@ -1,24 +1,17 @@
 from pyinfra.operations import pacman
 
 packages = [
-    "age",
-    "chezmoi",
-    "gdu",
-    "opencode",
-    "restic",
-    "sddm-astronaut-theme",
-    "shellcheck",
-    "shfmt",
-    "starship",
-    "ventoy-bin",
-    "yazi",
-    "zoxide",
+    "cachyos-hypr-noctalia",
+    "dolphin",
+    "hyprland",
+    "kitty",
+    "sddm",
 ]
 
 
 def install() -> None:
     pacman.packages(
-        name="Install My Tools",
+        name="Install Hyprland",
         packages=packages,
         present=True,
         update=True,
@@ -27,7 +20,7 @@ def install() -> None:
 
 def remove() -> None:
     pacman.packages(
-        name="Remove My Tools",
+        name="Remove Hyprland",
         packages=packages,
         present=False,
         update=True,

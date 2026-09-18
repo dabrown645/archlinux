@@ -45,7 +45,6 @@ def install_keyring_mirror() -> None:
 
 
 def install():
-    global packages
 
     # 1. Import key
     get_primary_key()
@@ -100,7 +99,6 @@ def install():
 
 
 def remove() -> None:
-    global packages
 
     pacman.packages(
         name="Remove packages installed from chaotic aur",

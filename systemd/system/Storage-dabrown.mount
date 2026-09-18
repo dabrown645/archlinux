@@ -1,13 +1,13 @@
 [Unit]
-Description=Mount /Storage/dabrown
-After=local-fs.target
+Description=Mount encrypted Storage partition (dabrown)
+After=dev-mapper-storage.device
+Requires=dev-mapper-storage.device
 
 [Mount]
-What=/dev/disk/by-partlabel/storage
+What=/dev/mapper/storage
 Where=/Storage/dabrown
 Type=btrfs
 Options=subvol=@dabrown,defaults,noatime,compress=zstd
 
 [Install]
 WantedBy=multi-user.target
-
