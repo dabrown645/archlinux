@@ -1,0 +1,16 @@
+android-udev
+bolt
+brightnessctl
+fprintd
+game-devices-udev
+iio-sensor-proxy
+libinput-gestures
+linuxconsole
+lirc
+v4l-utils
+xdotool
+xf86-input-elographics
+xf86-input-evdev
+xf86-input-libinput
+xf86-input-void
+xf86-input-wacom

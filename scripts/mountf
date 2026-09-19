@@ -1,0 +1,29 @@
+        #TODO: add encryption of root volume
+  ${cmd} mount --mkdir --options subvol=/@,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall
+  ${cmd} mount --mkdir --options subvol=/@home,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/home
+  ${cmd} mount --mkdir --options subvol=/@.snapshots,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/.snapshots
+  ${cmd} mount --mkdir --options subvol=/@root,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/root
+  ${cmd} mount --mkdir --options subvol=/@srv,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/srv
+  ${cmd} mount --mkdir --options subvol=/@cache,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/cache
+  ${cmd} mount --mkdir --options subvol=/@log,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/log
+  ${cmd} mount --mkdir --options subvol=/@tmp,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/tmp
+  ${cmd} mount --mkdir --options subvol=/@images,defaults,noatime,compress=zstd ${rootdisk} /mnt/archinstall/var/lib/libvirt/images
+  ${cmd} mount --mkdir --options defaults /dev/disk/by-partlabel/EFI /mnt/archinstall/boot/efi
+
+}
+
+cleanup() {
+  :
+}
+
+usage() {
+  printf "${0} [-h|--help] [-d|--dryrun] device\n"
+  printf "\nThis script will ask if you want to format the partitions used by archlinux\n"
+  printf "\n\t-d|--dryrun        Will tell you commands that will be run without running\n"
+  printf "\t-h|--help          This help information\n"
+  printf "\tdevice             This is the device with partitions to be formated\n"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "${@}"
+fi

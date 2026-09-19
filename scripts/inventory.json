@@ -62,6 +62,10 @@
         "description": "Linux Infrared Remote Control utilities"
       },
       {
+        "name": "reflector",
+        "description": "A Python 3 module and script to retrieve and filter the latest Pacman mirror list."
+      },
+      {
         "name": "v4l-utils",
         "description": "Userspace tools and conversion library for Video 4 Linux"
       },
@@ -238,26 +242,6 @@
         "description": "Archiving Tool"
       },
       {
-        "name": "plasma-applet-window-buttons",
-        "description": "Plasma applet in order to show window buttons in your panels"
-      },
-      {
-        "name": "plasma-browser-integration",
-        "description": "Components necessary to integrate browsers into the Plasma Desktop"
-      },
-      {
-        "name": "plasma-desktop",
-        "description": "KDE Plasma Desktop"
-      },
-      {
-        "name": "plasma6-applets-window-title",
-        "description": "Plasma 6 applet that shows the application title and icon for active window"
-      },
-      {
-        "name": "plasma6-wallpapers-blurredwallpaper",
-        "description": "KDE Plasma wallpaper plugin that blurs the wallpaper when a window is active"
-      },
-      {
         "name": "dolphin",
         "description": "KDE File Manager"
       },
@@ -282,24 +266,44 @@
         "description": "KDE terminal emulator"
       },
       {
+        "name": "kwalletmanager",
+        "description": "WAllet management tool"
+      },
+      {
         "name": "openssh",
         "description": "SSH protocol implementation for remote login, command execution and file transfer"
+      },
+      {
+        "name": "plasma-applet-window-buttons",
+        "description": "Plasma applet in order to show window buttons in your panels"
       },
       {
         "name": "plasma-meta",
         "description": "Meta package to install KDE Plasma"
       },
       {
+        "name": "plasma-sdk",
+        "description": "Applications useful for Plasma development"
+      },
+      {
         "name": "plasma-workspace",
         "description": "KDE Plasma Workspace"
       },
       {
-        "name": "sddm",
-        "description": "QML based X11 and Wayland display manager"
+        "name": "plasma6-applets-window-title",
+        "description": "Plasma 6 applet that shows the application title and icon for active window"
       },
       {
-        "name": "sddm-kcm",
-        "description": "KDE Config Module for SDDM"
+        "name": "plasma6-wallpapers-blurredwallpaper",
+        "description": "KDE Plasma wallpaper plugin that blurs the wallpaper when a window is active"
+      },
+      {
+        "name": "plymouth-kcm",
+        "description": "KCM to manage the Plymouth (Boot) theme"
+      },
+      {
+        "name": "sddm",
+        "description": "QML based X11 and Wayland display manager"
       },
       {
         "name": "smartmontools",
@@ -392,6 +396,10 @@
       {
         "name": "nvidia-dkms",
         "description": "NVIDIA kernel modules - module sources"
+      },
+      {
+        "name": "nvidia-settings",
+        "description": "Tool for configuring the NVIDIA graphics driver"
       }
     ]
   },
@@ -750,6 +758,10 @@
         "description": "Actions gestures on your touchpad using libinput"
       },
       {
+        "name": "ncdu",
+        "description": "Disk usage analyzer with an ncurses interface"
+      },
+      {
         "name": "nix",
         "description": "A purely functional package manager"
       },
@@ -784,6 +796,10 @@
       {
         "name": "ventoy-bin",
         "description": "A new bootable USB solution"
+      },
+      {
+        "name": "wezterm-git",
+        "description": "A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering"
       },
       {
         "name": "yazi",

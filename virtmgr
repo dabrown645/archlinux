@@ -1,0 +1,10 @@
+bridge-utils
+dnsmasq
+iptables-nft
+edk2-ovmf
+libvirt
+gnu-netcat
+qemu-desktop
+radvd
+virt-viewer
+virt-manager

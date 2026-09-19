@@ -1,0 +1,12 @@
+BootCurrent: 0001
+Timeout: 0 seconds
+BootOrder: 0008,0000,0001,0002,0003,0004,0005,0006,0007
+Boot0000* UiApp	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)
+Boot0001* UEFI QEMU DVD-ROM QM00001 	PciRoot(0x0)/Pci(0x1f,0x2)/Sata(0,65535,0)걎脈鼑䵙຅᫢ⱒ뉙
+Boot0002* UEFI Misc Device	PciRoot(0x0)/Pci(0x9,0x0)걎脈鼑䵙຅᫢ⱒ뉙
+Boot0003* UEFI PXEv4 (MAC:525400123456)	PciRoot(0x0)/Pci(0x8,0x0)/MAC(525400123456,1)/IPv4(0.0.0.0,0,DHCP,0.0.0.0,0.0.0.0,0.0.0.0)걎脈鼑䵙຅᫢ⱒ뉙
+Boot0004* UEFI PXEv6 (MAC:525400123456)	PciRoot(0x0)/Pci(0x8,0x0)/MAC(525400123456,1)/IPv6([::],0,Static,[::],[::],64)걎脈鼑䵙຅᫢ⱒ뉙
+Boot0005* UEFI HTTPv4 (MAC:525400123456)	PciRoot(0x0)/Pci(0x8,0x0)/MAC(525400123456,1)/IPv4(0.0.0.0,0,DHCP,0.0.0.0,0.0.0.0,0.0.0.0)/Uri()걎脈鼑䵙຅᫢ⱒ뉙
+Boot0006* UEFI HTTPv6 (MAC:525400123456)	PciRoot(0x0)/Pci(0x8,0x0)/MAC(525400123456,1)/IPv6([::],0,Static,[::],[::],64)/Uri()걎脈鼑䵙຅᫢ⱒ뉙
+Boot0007* EFI Internal Shell	FvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(7c04a583-9e3e-4f1c-ad65-e05268d0b4d1)
+Boot0008* Arch	HD(1,GPT,095f914a-8299-4508-bafa-478105ce9f57,0x800,0x200000)/\EFI\Arch\grubx64.efi
